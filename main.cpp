@@ -1,39 +1,14 @@
-#include "matplotlib-cpp/matplotlibcpp.h"
-#include <vector>
-#include <cmath>
 
-namespace plt = matplotlibcpp;
+#include "include.cpp"
+#include "trainer.cpp"
 
 int main()
 {
-    std::vector<std::vector<double>> x, y, z;
-    for (double i = -5; i <= 5;  i += 0.25) {
-        std::vector<double> x_row, y_row, z_row;
-        for (double j = -5; j <= 5; j += 0.25) {
-            x_row.push_back(i);
-            y_row.push_back(j);
-            z_row.push_back(::std::sin(::std::hypot(i, j)));
-        }
-        x.push_back(x_row);
-        y.push_back(y_row);
-        z.push_back(z_row);
-    }
+    std::string image_file = "/Users/anshumantiwari/Documents/codes/personal/C++/GAN/MNIST_data/train-images-idx3-ubyte";
+    std::string label_file = "/Users/anshumantiwari/Documents/codes/personal/C++/GAN/MNIST_data/train-labels-idx1-ubyte";
+    std::string root = "/Users/anshumantiwari/Documents/codes/personal/C++/GAN/MNIST_data";
 
-    plt::figure(); 
-    plt::plot_surface(x, y, z);
-    plt::show();
+    GANTrainer trainer(image_file, label_file, root);
+    trainer.train();
+    return 0;
 }
-
-
-
-/*
-g++ -std=c++17 \
-    -I$(python3 -c "import sysconfig; print(sysconfig.get_path('include'))") \
-    -I$(python3 -c "import numpy; print(numpy.get_include())") \
-    -L/Users/anshumantiwari/miniconda3/lib/ -lpython3.12 \
-    ./main.cpp
-    
-    export DYLD_LIBRARY_PATH=/Users/anshumantiwari/miniconda3/lib:$DYLD_LIBRARY_PATH
-
-
-*/
